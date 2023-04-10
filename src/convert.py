@@ -20,7 +20,7 @@ from pywpsrpc.rpcwpsapi import (createWpsRpcInstance, wpsapi)
 from pywpsrpc.common import (S_OK, QtApp)
 
 from starlette.requests import Request
-from fastapi import FastAPI, Form, File, UploadFile, Path
+from fastapi import FastAPI, Form, File, UploadFile, Path, Query
 from fastapi.responses import JSONResponse
 from fastapi.openapi.docs import (
     get_swagger_ui_html,
@@ -40,7 +40,7 @@ formats = {
 
 media_types = {
     "html": "text/html",
-    "pdf":"application/pdf"
+    "pdf":"application/pdf;charset=utf-8"
 }
 
 log_levels = {
