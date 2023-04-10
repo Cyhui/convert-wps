@@ -113,15 +113,16 @@ async def custom_swagger_ui_html():
         swagger_css_url="/static/swagger-ui.css",
     )
 
-@app.post('/api/v1/convert/wps/{fileType}')
-async def convert(request: Request, file: UploadFile = File(...), fileType: str = Path(..., description="目标文件类型,支持：doc、docx、rtf、html、pdf、xml")):
+@app.get('/api/v1/convert/wps/{fileType}')
+async def convert(fileUrl: str = Query(...), fileType: str = Path(..., description="目标文件类型,支持：doc、docx、rtf、html、pdf、xml")):
     if fileType in formats:
         file_name = str(uuid.uuid1())
         path = os.path.join(base_path ,file_name)
         os.makedirs(base_path, exist_ok=True)
-        contents = await file.read()
+        # 获取待转换的文件 url
+        contents = requests.get(fileUrl)
         with open(path,'wb') as f:
-            f.write(contents)
+            f.write(contents.content)
         global docs
         global new_path
         global start_returnTime
