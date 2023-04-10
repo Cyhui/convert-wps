@@ -10,6 +10,7 @@
 import os
 import sys
 import uuid
+import requests
 
 import subprocess
 import logging, logging.config
